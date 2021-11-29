@@ -1,3 +1,5 @@
+# Adding comment
+
 import os
 
 from cs50 import SQL
@@ -273,3 +275,5 @@ def errorhandler(e):
 # Listen for errors
 for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
+
+print ("hello")
