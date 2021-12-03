@@ -45,10 +45,7 @@ def after_request(response):
 @login_required
 def index():
     """Show all items for sale in tables """
-
-
-
-    return render_template("test.html")
+    return render_template("index.html")
 
 
 @app.route("/buy", methods=["GET", "POST"])
