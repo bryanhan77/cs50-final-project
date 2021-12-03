@@ -31,10 +31,6 @@ Session(app)
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///hmart.db")
 
-# Make sure API key is set
-if not os.environ.get("API_KEY"):
-    raise RuntimeError("API_KEY not set")
-
 
 @app.after_request
 def after_request(response):
@@ -48,28 +44,11 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index():
-    """Show portfolio of stocks"""
+    """Show all items for sale in tables """
 
-    # Queries for current cash to display directly to users below list of stocks
-    cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
 
-    # Queries for current cash in order add values of stock to it to find total value
-    cashCurrent = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
-    totalCurrent = cashCurrent[0]
 
-    # Finds each non-dupilicate stock, sums their shares, and finds the total value of each stock owned
-    stocks = []
-    total = db.execute("SELECT symbol, name, SUM(shares) FROM stocks WHERE userid = ? GROUP BY symbol", session["user_id"])
-    for i in range(len(total)):
-        currentPrice = lookup(total[i]["symbol"])["price"]
-        totalValue = currentPrice * total[i]["SUM(shares)"]
-        dict = {"symbol": total[i]["symbol"], "name": total[i]["name"], "shares": total[i]
-                ["SUM(shares)"], "price": currentPrice, "TOTAL": totalValue}
-        stocks.append(dict)
-        currentTotal = totalCurrent["cash"] + totalValue
-        totalCurrent.update({"cash": currentTotal})
-    
-    return render_template("index.html", stocks=stocks, cash=cash, total=totalCurrent)
+    return render_template("test.html")
 
 
 @app.route("/buy", methods=["GET", "POST"])
