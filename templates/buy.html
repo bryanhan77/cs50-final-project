@@ -1,17 +1,21 @@
-{% extends "layout.html" %}
+{% extends "test.html" %}
 
 {% block title %}
     Buy
 {% endblock %}
 
 {% block main %}
+    <h1 class="w3-main" style="margin-top:50px;text-align:center"><b>Buy</b></h1>
+    <br>
     <form action="/buy" method="post">
         <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="symbol" name="symbol" placeholder="Symbol" type="text">
+            <input class="form-control mx-auto w-auto" id="card" name="card" placeholder="Credit Card" type="number">
         </div>
         <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="shares" name="shares" placeholder="Shares" type="number">
+            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Re-enter Password" type="text">
         </div>
-        <button class="btn btn-primary" type="submit">Buy</button>
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-primary" type="submit">Buy</button>
+        </div>
     </form>
 {% endblock %}
