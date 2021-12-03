@@ -45,10 +45,7 @@ def after_request(response):
 @login_required
 def index():
     """Show all items for sale in tables """
-
-
-
-    return render_template("test.html")
+    return render_template("index.html")
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -204,11 +201,8 @@ def sell():
     if request.method == "POST":
 
         # Filters for getting allowed number of stocks to sell
-        if not request.form.get("symbol"):
-            return apology("must provide symbol", 400)
-        symbol = request.form.get("symbol")
-        sumShares = db.execute("SELECT SUM(shares) FROM stocks WHERE userid = ? AND symbol = ? GROUP BY symbol",
-                               session["user_id"], symbol)
+        if not request.form.get("name"):
+            return apology("must provide name", 400)
         if sumShares[0]["SUM(shares)"] < 0:
             return apology("no shares of stock", 400)
         shares = int(request.form.get("shares"))
@@ -238,8 +232,6 @@ def sell():
         db.execute("UPDATE users SET cash = ? WHERE id = ?", cashNew, session["user_id"])
         return redirect("/")
     else:
-        
-        # Passes on info on stocks user currently owns to the html file, where dropdown displays these stocks
         return render_template("sell.html")
 
 
