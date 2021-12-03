@@ -204,11 +204,8 @@ def sell():
     if request.method == "POST":
 
         # Filters for getting allowed number of stocks to sell
-        if not request.form.get("symbol"):
-            return apology("must provide symbol", 400)
-        symbol = request.form.get("symbol")
-        sumShares = db.execute("SELECT SUM(shares) FROM stocks WHERE userid = ? AND symbol = ? GROUP BY symbol",
-                               session["user_id"], symbol)
+        if not request.form.get("name"):
+            return apology("must provide name", 400)
         if sumShares[0]["SUM(shares)"] < 0:
             return apology("no shares of stock", 400)
         shares = int(request.form.get("shares"))
@@ -238,10 +235,7 @@ def sell():
         db.execute("UPDATE users SET cash = ? WHERE id = ?", cashNew, session["user_id"])
         return redirect("/")
     else:
-        
-        # Passes on info on stocks user currently owns to the html file, where dropdown displays these stocks
-        symbols = db.execute("SELECT symbol FROM stocks WHERE userid = ? GROUP BY symbol", session["user_id"])
-        return render_template("sell.html", symbols=symbols)
+        return render_template("sell.html")
 
 
 def errorhandler(e):
