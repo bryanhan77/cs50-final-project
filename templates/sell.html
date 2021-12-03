@@ -6,17 +6,18 @@
 
 {% block main %}
     <form action="/sell" method="post">
-        <select name="symbol" id="symbol">
-            <option selected="true" disabled="disabled">Symbol</option>
-            {% for item in symbols %}
-            <option>{{ item.symbol }}</option>
-            {% endfor %}
-        </select>
-        <br>
-        <br>
         <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="shares" name="shares" placeholder="Shares" type="number">
+            <input class="form-control mx-auto w-auto" id="name" name="name" placeholder="Name of Product" type="text">
         </div>
-        <button class="btn btn-primary" type="submit">Sell</button>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" id="desc" name="desc" placeholder="Description of Product" type="text">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" id="price" name="price" placeholder="Price" type="number">
+        </div>
+        <label for="img">Select image:</label>
+        <input type="file" id="img" name="img" accept="image/*">
+        <input type="submit">
+        <button class="btn btn-primary" type="submit">Post Listing</button>
     </form>
 {% endblock %}
