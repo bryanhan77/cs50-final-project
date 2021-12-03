@@ -1,10 +1,12 @@
-{% extends "layout.html" %}
+{% extends "test.html" %}
 
 {% block title %}
     Register
 {% endblock %}
 
 {% block main %}
+    <h1 class="w3-main" style="margin-top:50px;text-align:center"><b>Register</b></h1>
+    <br>
     <form action="/register" method="post">
         <div class="mb-3">
             <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
@@ -15,6 +17,8 @@
         <div class="mb-3">
             <input class="form-control mx-auto w-auto" id="confirmation" name="confirmation" placeholder="Password (again)" type="password">
         </div>
-        <button class="btn btn-primary" type="submit">Register</button>
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-primary" type="submit">Register</button>
+        </div>
     </form>
 {% endblock %}

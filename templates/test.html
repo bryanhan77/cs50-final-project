@@ -42,12 +42,18 @@
       <h3 class="w3-padding-64"><b>H-Mart<br><h4>By Paul and Bryan</h4></b></h3>
     </div>
     <div class="w3-bar-block">
-      <a href="#dorm" class="w3-bar-item w3-button w3-hover-white">Dorm Supplies</a> 
-      <a href="#clothes" class="w3-bar-item w3-button w3-hover-white">Clothing</a> 
-      <a href="#textbooks" class="w3-bar-item w3-button w3-hover-white">Textbooks</a> 
-      <a href="#tickets" class="w3-bar-item w3-button w3-hover-white">Tickets</a>
-      <a href="#misc" class="w3-bar-item w3-button w3-hover-white">Misc</a> 
-      <a href="/sell" class="w3-bar-item w3-button w3-hover-white">Sell</a>
+      {% if session["user_id"] %}
+        <a href="/#dorm" class="w3-bar-item w3-button w3-hover-white">Dorm Supplies</a> 
+        <a href="/#clothes" class="w3-bar-item w3-button w3-hover-white">Clothing</a> 
+        <a href="/#textbooks" class="w3-bar-item w3-button w3-hover-white">Textbooks</a> 
+        <a href="/#tickets" class="w3-bar-item w3-button w3-hover-white">Tickets</a>
+        <a href="/#misc" class="w3-bar-item w3-button w3-hover-white">Misc</a> 
+        <a href="/sell" class="w3-bar-item w3-button w3-hover-white">Sell</a>
+        <a href="/logout" class="w3-bar-item w3-button w3-hover-white">Log Out</a>
+      {% else %}
+        <a href="/register" class="w3-bar-item w3-button w3-hover-white">Register</a>
+        <a href="/login" class="w3-bar-item w3-button w3-hover-white">Log In</a>
+      {% endif %}
     </div>
   </nav>
 
