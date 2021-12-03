@@ -240,8 +240,7 @@ def sell():
     else:
         
         # Passes on info on stocks user currently owns to the html file, where dropdown displays these stocks
-        symbols = db.execute("SELECT symbol FROM stocks WHERE userid = ? GROUP BY symbol", session["user_id"])
-        return render_template("sell.html", symbols=symbols)
+        return render_template("sell.html")
 
 
 def errorhandler(e):
