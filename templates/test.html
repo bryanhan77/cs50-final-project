@@ -42,12 +42,11 @@ nav {
     <h3 class="w3-padding-64"><b>A CS50 Project<br><h4>Paul and Bryan</h4></b></h3>
   </div>
   <div class="w3-bar-block">
-    <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a> 
-    <a href="#showcase" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Showcase</a> 
-    <a href="#services" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Services</a> 
-    <a href="#designers" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Designers</a> 
-    <a href="#packages" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Packages</a> 
-    <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a>
+    <a href="#dorm" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Dorm Supplies</a> 
+    <a href="#clothes" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Clothing</a> 
+    <a href="#textbooks" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Textbooks</a> 
+    <a href="#tickets" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Tickets</a>
+    <a href="#misc" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Misc</a> 
     <a href="/buy" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Buy</a>
   </div>
 </nav>
@@ -65,9 +64,9 @@ nav {
 <div class="w3-main" style="margin-left:340px;margin-right:40px">
 
   <!-- Header -->
-  <div class="w3-container" style="margin-top:80px" id="showcase">
+  <div class="w3-container" style="margin-top:80px" id="dorm">
     <h1 class="w3-jumbo"><b>H-Mart</b></h1>
-    <h1 class="w3-xxxlarge w3-text-red"><b>Showcase.</b></h1>
+    <h1 class="w3-xxxlarge w3-text-red"><b>Dorm Supplies.</b></h1>
     <hr style="width:50px;border:5px solid red" class="w3-round">
   </div>
   
@@ -75,7 +74,11 @@ nav {
   <div class="w3-row-padding">
     <div class="w3-half">
       <img src="https://rnb.scene7.com/is/image/roomandboard/698884_wood_W?scl=1" style="width:100%" onclick="onClick(this)" alt="Concrete meets bricks">
+      <form action="/buy">
+        <input class="form-control mx-auto w-auto" type="submit" value="Buy" />
+      </form>      
       <img src="https://m.media-amazon.com/images/I/81J5r9dANGL._SL1500_.jpg" style="width:100%" onclick="onClick(this)" alt="Light, white and tight scandinavian design">
+      <button class="btn btn-primary" type="submit">Register</button>
       <img src="/w3images/diningroom.jpg" style="width:100%" onclick="onClick(this)" alt="White walls with designer chairs">
     </div>
 
@@ -95,17 +98,58 @@ nav {
     </div>
   </div>
 
-  <!-- Services -->
-  <div class="w3-container" id="services" style="margin-top:75px">
-    <h1 class="w3-xxxlarge w3-text-red"><b>Services.</b></h1>
+  <!-- Clothes -->
+  <div class="w3-container" id="clothes" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Clothes</b></h1>
     <hr style="width:50px;border:5px solid red" class="w3-round">
-    <p>We are a interior design service that focus on what's best for your home and what's best for you!</p>
-    <p>Some text about our services - what we do and what we offer. We are lorem ipsum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor
-    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
+    
+    <div class="w3-row-padding">
+        <div class="w3-half">
+          <img src="https://rnb.scene7.com/is/image/roomandboard/698884_wood_W?scl=1" style="width:100%" onclick="onClick(this)" alt="Concrete meets bricks">
+          <img src="https://m.media-amazon.com/images/I/81J5r9dANGL._SL1500_.jpg" style="width:100%" onclick="onClick(this)" alt="Light, white and tight scandinavian design">
+        </div>
+    
+        <div class="w3-half">
+          <img src="https://m.media-amazon.com/images/I/71qtAiNUCpL._AC_SX425_.jpg" style="width:100%" onclick="onClick(this)" alt="Windows for the atrium">
+          <img src="https://i.insider.com/60f860760729770012b91c62?width=700" style="width:100%" onclick="onClick(this)" alt="Bedroom and office in one space">
+        </div>
+    </div>
   </div>
-  
+
+  <!-- Textbooks -->
+  <div class="w3-container" id="textbooks" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Textbooks</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+    
+    <div class="w3-row-padding">
+        <div class="w3-half">
+          <img src="https://rnb.scene7.com/is/image/roomandboard/698884_wood_W?scl=1" style="width:100%" onclick="onClick(this)" alt="Concrete meets bricks">
+          <img src="https://m.media-amazon.com/images/I/81J5r9dANGL._SL1500_.jpg" style="width:100%" onclick="onClick(this)" alt="Light, white and tight scandinavian design">
+        </div>
+    
+        <div class="w3-half">
+          <img src="https://m.media-amazon.com/images/I/71qtAiNUCpL._AC_SX425_.jpg" style="width:100%" onclick="onClick(this)" alt="Windows for the atrium">
+          <img src="https://i.insider.com/60f860760729770012b91c62?width=700" style="width:100%" onclick="onClick(this)" alt="Bedroom and office in one space">
+        </div>
+    </div>
+  </div>
+  <!-- Tickets -->
+  <div class="w3-container" id="tickets" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Tickets</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+    
+    <div class="w3-row-padding">
+        <div class="w3-half">
+          <img src="https://rnb.scene7.com/is/image/roomandboard/698884_wood_W?scl=1" style="width:100%" onclick="onClick(this)" alt="Concrete meets bricks">
+          <img src="https://m.media-amazon.com/images/I/81J5r9dANGL._SL1500_.jpg" style="width:100%" onclick="onClick(this)" alt="Light, white and tight scandinavian design">
+        </div>
+    
+        <div class="w3-half">
+          <img src="https://m.media-amazon.com/images/I/71qtAiNUCpL._AC_SX425_.jpg" style="width:100%" onclick="onClick(this)" alt="Windows for the atrium">
+          <img src="https://i.insider.com/60f860760729770012b91c62?width=700" style="width:100%" onclick="onClick(this)" alt="Bedroom and office in one space">
+        </div>
+    </div>
+  </div>
   <!-- Designers -->
   <div class="w3-container" id="designers" style="margin-top:75px">
     <h1 class="w3-xxxlarge w3-text-red"><b>Designers.</b></h1>
