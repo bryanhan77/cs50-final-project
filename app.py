@@ -45,6 +45,7 @@ def after_request(response):
 @login_required
 def index():
     """Show all items for sale in tables """
+    
     return render_template("index.html")
 
 
@@ -200,37 +201,16 @@ def sell():
 
     if request.method == "POST":
 
-        # Filters for getting allowed number of stocks to sell
-        if not request.form.get("name"):
-            return apology("must provide name", 400)
-        if sumShares[0]["SUM(shares)"] < 0:
-            return apology("no shares of stock", 400)
-        shares = int(request.form.get("shares"))
-        if shares <= 0:
-            return apology("must sell positive shares", 400)
-        if shares > sumShares[0]["SUM(shares)"]:
-            return apology("selected too many shares", 400)
+        # checks that all fields are filled
+        if not request.form.get("img") or not request.form.get("name") or not request.form.get("desc") or not request.form.get("price"):
+            return apology("must fill all fields", 400)
 
-        # Looks up all the info for the stock user wants to sell
-        dict = lookup(symbol)
-        symbolCap = dict["symbol"]
-        name = dict["name"]
-        sharesNeg = -1 * shares
-        price = dict["price"]
-        userid = session["user_id"]
-        time = datetime.datetime.now()
-        total = price * shares
-
-        # Inserts into the stock table the negative value of shares wanting to be sold
-        db.execute("INSERT INTO stocks (symbol, name, shares, price, TOTAL, userid, datetime) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                   symbolCap, name, sharesNeg, price, total, userid, time)
+        # Updates items table with new item
+        # TBD - db.execute("INSERT INTO stocks (symbol, name, shares, price, TOTAL, userid, datetime) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                  # symbolCap, name, sharesNeg, price, total, userid, time)
+        image = request.form.get("img")
         
-        # Updates users cash to correctly reflect the amount of money made by selling stock
-        cashEarned = shares * price
-        cashCurrent = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
-        cashNew = cashCurrent[0]["cash"] + cashEarned
-        db.execute("UPDATE users SET cash = ? WHERE id = ?", cashNew, session["user_id"])
-        return redirect("/")
+        return apology(type(image))
     else:
         return render_template("sell.html")
 

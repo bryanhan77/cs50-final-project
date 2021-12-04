@@ -1,5 +1,3 @@
-CREATE TABLE items (person_id INTEGER, image TEXT NOT NULL, price NUMERIC NOT NULL, shares INTEGER NOT NULL DEFAULT 0, time_stamp TEXT NOT NULL, FOREIGN KEY(person_id) REFERENCES users(id));
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -35,7 +33,6 @@ CREATE TABLE items (person_id INTEGER, image TEXT NOT NULL, price NUMERIC NOT NU
 
   </head>
 
-
   <body>
   <!-- Sidebar/menu -->
   <nav class="w3-sidebar w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold" id="mySidebar"><br>
@@ -44,11 +41,11 @@ CREATE TABLE items (person_id INTEGER, image TEXT NOT NULL, price NUMERIC NOT NU
       <h3 class="w3-padding-64"><b>H-Mart<br><h4>By Paul and Bryan</h4></b></h3>
     </div>
     <div class="w3-bar-block">
-      <a href="#dorm" class="w3-bar-item w3-button w3-hover-white">Dorm Supplies</a> 
-      <a href="#clothes" class="w3-bar-item w3-button w3-hover-white">Clothing</a> 
-      <a href="#textbooks" class="w3-bar-item w3-button w3-hover-white">Textbooks</a> 
-      <a href="#tickets" class="w3-bar-item w3-button w3-hover-white">Tickets</a>
-      <a href="#misc" class="w3-bar-item w3-button w3-hover-white">Misc</a> 
+      <a href="/#dorm" class="w3-bar-item w3-button w3-hover-white">Dorm Supplies</a> 
+      <a href="/#clothes" class="w3-bar-item w3-button w3-hover-white">Clothing</a> 
+      <a href="/#textbooks" class="w3-bar-item w3-button w3-hover-white">Textbooks</a> 
+      <a href="/#tickets" class="w3-bar-item w3-button w3-hover-white">Tickets</a>
+      <a href="/#misc" class="w3-bar-item w3-button w3-hover-white">Misc</a> 
       <a href="/sell" class="w3-bar-item w3-button w3-hover-white">Sell</a>
     </div>
   </nav>
