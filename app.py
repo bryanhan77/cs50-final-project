@@ -12,7 +12,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 
-from helpers import apology, login_required, lookup, usd
+from helpers import apology, login_required, usd
 
 UPLOAD_FOLDER = '/path/to/the/uploads'
 
@@ -63,15 +63,14 @@ def index():
 @app.route("/buy", methods=["GET", "POST"])
 @login_required
 def buy():
-    """Buy shares of stock"""
-    rows = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
+    """Buy selected item"""
 
     if request.method == "POST":
-        # Check password correct
-        if not request.form.get("password"):
-            return apology("Must provide password", 400)
+
+        creditcard = request.form.get("card")
+        rows = db.execute("SELECT * FROM users WHERE user = ?", session["user_id"])
         if not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            return apology("Incorrecct pswd")
+            return apology("incorrect password", 403)
         return redirect("/")        
     else:
         return render_template("buy.html")
@@ -198,5 +197,3 @@ def errorhandler(e):
 # Listen for errors
 for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
-
-print ("hello")
