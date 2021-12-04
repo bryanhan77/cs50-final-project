@@ -9,7 +9,7 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import apology, login_required, lookup, usd
+from helpers import apology, login_required, usd
 
 # Imports datetime in order to track date and time of transactions
 import datetime
@@ -60,7 +60,6 @@ def buy():
         rows = db.execute("SELECT * FROM users WHERE user = ?", session["user_id"])
         if not check_password_hash(rows[0]["hash"], request.form.get("password")):
             return apology("incorrect password", 403)
-        """db.execute("DELETE FROM items WHERE ")"""
         return redirect("/")        
     else:
         return render_template("buy.html")
