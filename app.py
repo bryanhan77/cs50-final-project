@@ -1,6 +1,8 @@
 # Adding comment
 #CREATE TABLE items (person_id INTEGER, file BLOB, name TEXT NOT NULL, description Text NOT NULL, FOREIGN KEY(person_id) REFERENCES users(id));
 import os
+import base64
+from io import BytesIO #Converts data from Database into bytes
 
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session, url_for
@@ -48,14 +50,14 @@ def after_request(response):
 @login_required
 def index():
     """Show all items for sale in tables """
-    table = db.execute("SELECT * FROM items")
+    table = db.execute("SELECT * FROM items WHERE file != ''")
     
-    file = db.execute("SELECT * FROM items")[0]["file"] #get first image file
+    #file = db.execute("SELECT * FROM items")[0]["file"] #get first image file
 
-    filename = secure_filename(file.filename)
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    #filename = secure_filename(file.filename)
+    #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-    return render_template("index.html", table=table)
+    return render_template("index.html", img=table[0]['file'].decode())
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -165,18 +167,22 @@ def sell():
     """Sell something"""
 
     if request.method == "POST":
-
         # checks that all fields are filled
-        if not request.form.get("img") or not request.form.get("name") or not request.form.get("desc") or not request.form.get("price"):
+        if not request.files.get("img") or not request.form.get("name") or not request.form.get("desc") or not request.form.get("price") or not request.form.get("category"):
             return apology("must fill all fields", 400)
 
         # Updates items table with new item
         
-        imagefile = request.files.get("img", '')
+        imagefile = request.files.get("img")
+        data = imagefile.read()
+        render_pic = base64.b64encode(data)
         name = request.form.get("name")
         desc = request.form.get("desc")
-
-        db.execute("INSERT INTO items (person_id, file, name, description) VALUES (?, ?, ?, ?)", session["user_id"], imagefile, name, desc )
+        category = request.form.get("category")
+        print(request.files)
+        print(request.form.get('img'))
+        print(name, desc, category, render_pic)
+        db.execute("INSERT INTO items (person_id, file, name, description, category) VALUES (?, ?, ?, ?, ?)", session["user_id"], render_pic, name, desc, category)
         return redirect("/")
     else:
         return render_template("sell.html")
