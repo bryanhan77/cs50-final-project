@@ -72,7 +72,7 @@ def history():
     """Show history of transactions"""
 
     # Queries for all the transactions and passes it onto the html file, where it is displayed
-    history = db.execute("SELECT symbol, shares, price, datetime FROM stocks WHERE userid = ?", session["user_id"])
+    history = db.execute("SELECT symbol, shares, price, datetime FROM stocks WHERE userid = ?", session["user_id"], )
     return render_template("history.html", history=history)
 
 
@@ -162,11 +162,13 @@ def sell():
             return apology("must fill all fields", 400)
 
         # Updates items table with new item
-        # TBD - db.execute("INSERT INTO stocks (symbol, name, shares, price, TOTAL, userid, datetime) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                  # symbolCap, name, sharesNeg, price, total, userid, time)
-        image = request.form.get("img")
         
-        return apology(type(image))
+        imagefile = request.files.get("img", '')
+        name = request.form.get("name")
+        desc = request.form.get("desc")
+
+        db.execute("INSERT INTO items (person_id, file, name, description) VALUES (?, ?, ?, ?)", session["user_id"], imagefile, name, desc )
+        return redirect("/")
     else:
         return render_template("sell.html")
 
