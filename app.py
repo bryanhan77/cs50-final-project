@@ -1,5 +1,5 @@
 # Adding comment
-
+#CREATE TABLE items (person_id INTEGER, file BLOB, name TEXT NOT NULL, description Text NOT NULL, FOREIGN KEY(person_id) REFERENCES users(id));
 import os
 
 from cs50 import SQL
