@@ -53,42 +53,15 @@ def index():
 @login_required
 def buy():
     """Buy shares of stock"""
+    rows = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
 
     if request.method == "POST":
-
-        # Filters for getting allowed number of stocks to buy
-        if not request.form.get("symbol"):
-            return apology("must provide symbol", 400)
-        symbol = request.form.get("symbol")
-        if lookup(symbol) == None:
-            return apology("invalid symbol", 400)
-        shares = request.form.get("shares")
-        try:
-            float(shares)
-        except:
-            return apology("shares must be numbers", 400)
-        if float(shares).is_integer() == False or float(shares) <= 0:
-            return apology("shares must be positive integers", 400)
-        
-        # Lookups the all the current info about the stock user wants to buy and inserts the data into the stocks table tagged with user's id
-        dict = lookup(symbol)
-        name = dict["name"]
-        price = dict["price"]
-        symbolCap = dict["symbol"]
-        userid = session["user_id"]
-        time = datetime.datetime.now()
-        cashCurrent = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
-        total = price * float(shares)
-        cashRemaining = cashCurrent[0]["cash"] - total
-        db.execute("UPDATE users SET cash = ? WHERE id = ?", cashRemaining, session["user_id"])
-
-        # Only inserts into table if the user has enough cash available
-        if cashRemaining >= 0:
-            db.execute("INSERT INTO stocks (symbol, name, shares, price, TOTAL, userid, datetime) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                       symbolCap, name, float(shares), price, total, userid, time)
-            return redirect("/")
-        else:
-            return apology("not enough cash", 400)
+        # Check password correct
+        if not request.form.get("password"):
+            return apology("Must provide password", 400)
+        if not check_password_hash(rows[0]["hash"], request.form.get("password")):
+            return apology("Incorrecct pswd")
+        return redirect("/")        
     else:
         return render_template("buy.html")
 
@@ -148,23 +121,6 @@ def logout():
 
     # Redirect user to login form
     return redirect("/")
-
-
-@app.route("/quote", methods=["GET", "POST"])
-@login_required
-def quote():
-    """Get stock quote."""
-    
-    if request.method == "POST":
-
-        # Checks for if the symbol exists and passes on the stock's info to html file
-        symbol = request.form.get("symbol")
-        if lookup(symbol) == None:
-            return apology("invalid symbol", 400)
-        dict = lookup(symbol)
-        return render_template("quoted.html", name=dict["name"], price=dict["price"], symbol=dict["symbol"])
-    else:
-        return render_template("quote.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
