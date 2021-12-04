@@ -178,9 +178,7 @@ def sell():
         name = request.form.get("name")
         desc = request.form.get("desc")
         category = request.form.get("category")
-        print(request.files)
-        print(request.form.get('img'))
-        print(name, desc, category, render_pic)
+       
         db.execute("INSERT INTO items (person_id, file, name, description, category) VALUES (?, ?, ?, ?, ?)", session["user_id"], render_pic, name, desc, category)
         return redirect("/")
     else:
