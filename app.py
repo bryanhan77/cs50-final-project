@@ -3,22 +3,25 @@
 import os
 
 from cs50 import SQL
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.utils import secure_filename
 
 from helpers import apology, login_required, lookup, usd
 
-# Imports datetime in order to track date and time of transactions
-import datetime
+UPLOAD_FOLDER = '/path/to/the/uploads'
+
 
 # Configure application
 app = Flask(__name__)
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 # Custom filter
 app.jinja_env.filters["usd"] = usd
@@ -45,8 +48,14 @@ def after_request(response):
 @login_required
 def index():
     """Show all items for sale in tables """
+    table = db.execute("SELECT * FROM items")
     
-    return render_template("index.html")
+    file = db.execute("SELECT * FROM items")[0]["file"] #get first image file
+
+    filename = secure_filename(file.filename)
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+    return render_template("index.html", table=table)
 
 
 @app.route("/buy", methods=["GET", "POST"])
