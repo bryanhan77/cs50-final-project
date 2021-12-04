@@ -19,8 +19,19 @@
             <input class="form-control mx-auto w-auto" id="price" name="price" placeholder="Price" type="number" step="0.01">
         </div>
         <div class="mb-3">
-            <div style="text-align:center" for="img">Insert image</div>
+            <div style="text-align:center" for="img">Insert image:</div>
             <input class="form-control mx-auto w-auto" id="img" name="img" type="file" accept="image/*">
+        </div>
+        <div class="mb-3">
+            <div style="text-align:center" for="category">Choose a category:</div>
+            <select class="form-control mx-auto w-auto" name="category" id="category">
+                <option selected="true" disabled="disabled">Category</option>
+                <option value="dorm">Dorm Supplies</option>
+                <option value="clothing">Clothing</option>
+                <option value="textbooks">Textbooks</option>
+                <option value="misc">Misc</option>
+              </select>
+              
         </div>
         <br>
         <div class="d-flex justify-content-center">
