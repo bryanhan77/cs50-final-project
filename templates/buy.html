@@ -8,21 +8,35 @@
     <h1 class="w3-main" style="margin-top:50px;text-align:center"><b>Buy</b></h1>
     <br>
     <div class="mb-3">
-        <div style="text-align:center">You have selected:<br>{{ currentItem.name }}</div>
+        <div style="text-align:center">
+            <h3>You have selected:</h3><br>
+            <div class="w3-half">
+                <img src="{{ 'data:image/png;base64,{}'.format(value) }}" style="width:100%" onclick="onClick(this)" alt="{{ currentItem.name }}">         
+            </div>
+            <div class="w3-half">
+                <h1 style="text-align:center"><b>{{ currentItem.name }}</b></h1><br>
+                <h2 style="text-align:center"><i>"{{ currentItem.description }}"</i></h2><br>
+                <h3 style="text-align:center">Price: {{ currentItem.price | usd }}</h3><br>
+            </div>
+        </div>
     </div>
-    <form action="/buy" method="post">
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="card" name="card" placeholder="Credit Card" type="text">
-        </div>
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Re-enter Password" type="text">
-        </div>
-        <!-- Send item id -->
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" type="hidden" id="item_id" name="item_id" value="{{ currentItem.id }}">
-        </div>
-        <div class="d-flex justify-content-center">
-            <button class="btn btn-primary" type="submit">Buy</button>
-        </div>
-    </form>
+    
+    <div class="w3-row-padding">
+        <br>
+        <form action="/buy" method="post">
+            <div class="mb-3">
+                <input class="form-control mx-auto w-auto" id="card" name="card" placeholder="Credit Card" type="text">
+            </div>
+            <div class="mb-3">
+                <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Re-enter Password" type="password">
+            </div>
+            <!-- Send item id -->
+            <div class="mb-3">
+                <input class="form-control mx-auto w-auto" type="hidden" id="item_id" name="item_id" value="{{ currentItem.id }}">
+            </div>
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-primary" style="width:25%" type="submit">Buy</button>
+            </div>
+        </form>
+    </div>
 {% endblock %}

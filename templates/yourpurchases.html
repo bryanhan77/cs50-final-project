@@ -1,12 +1,12 @@
 {% extends "test.html" %}
 
 {% block title %}
-    Your Listings
+    Your Past Purchases
 {% endblock %}
 
 {% block main %}
   <!-- Header -->
-  <h1 class="w3-main" style="margin-top:50px;text-align:center"><b>Your Listings</b></h1>
+  <h1 class="w3-main" style="margin-top:50px;text-align:center"><b>Your Past Purchases</b></h1>
   
   <!-- {% for dict in table %}
       <img src="{{ 'data:image/png;base64,{}'.format(dict.file) }}"/>
@@ -15,7 +15,7 @@
   <div class="w3-container" style="margin-top:80px" id="yourlistings">
     <div class="w3-row-padding">
       <hr style="width:50px;border:5px solid red" class="w3-round">
-    {% for dict in yourlistings %}
+    {% for dict in yourpurchases %}
       <div class="w3-row-padding">
         <div class="w3-half">
           <img src="{{ 'data:image/png;base64,{}'.format(dict.file) }}" style="width:100%" onclick="onClick(this)" alt="{{ dict.name }}">     

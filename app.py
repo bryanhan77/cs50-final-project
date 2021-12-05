@@ -49,14 +49,16 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index():
-    """Show all items for sale in tables """
+    """Show all items for sale in tables"""
     table = db.execute("SELECT * FROM items WHERE file != ''")
     decoded = []
     for row in table:
         decoded.append(row["file"].decode())
     for count, value in enumerate(decoded):
         table[count]["file"] = value
-    return render_template("index.html", table=table)
+
+    username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]
+    return render_template("index.html", table=table, username=username)
 
 @app.route("/buy", methods=["GET", "POST"])
 @login_required
@@ -72,12 +74,23 @@ def buy():
 
         # Update database - delete item
         item_id = request.form.get("item_id")
+        
+        table = db.execute("SELECT * FROM items WHERE id = ?", item_id)[0]
+        file = table["file"]
+        name = table["name"]
+        desc = table["description"]
+        price = table["price"]
+        category = table["category"]
+        db.execute("INSERT INTO past (person_id, file, name, description, price, category) VALUES (?, ?, ?, ?, ?, ?)", session["user_id"], file, name, desc, price, category)
+
         db.execute("DELETE FROM items WHERE id = ?", item_id)
         return redirect("/")        
     else:
         item_id = request.args.get("item_id")
-        currentItem = db.execute("SELECT * FROM items WHERE id = ?", item_id)
-        return render_template("buy.html", item_id=item_id, currentItem=currentItem[0])
+        currentItem = db.execute("SELECT * FROM items WHERE id = ?", item_id)[0]
+        value = currentItem["file"].decode()
+        currentItem["file"] = value
+        return render_template("buy.html", value=value, currentItem=currentItem)
 
 
 @app.route("/yourlistings")
@@ -86,7 +99,12 @@ def yourlistings():
     """Show your current listings"""
 
     # Queries for all the transactions and passes it onto the html file, where it is displayed
-    yourlistings = db.execute("SELECT * FROM items WHERE userid = ?", session["user_id"])
+    yourlistings = db.execute("SELECT * FROM items WHERE person_id = ?", session["user_id"])
+    decoded = []
+    for row in yourlistings:
+        decoded.append(row["file"].decode())
+    for count, value in enumerate(decoded):
+        yourlistings[count]["file"] = value
     return render_template("yourlistings.html", yourlistings=yourlistings)
 
 @app.route("/yourpurchases")
@@ -95,8 +113,13 @@ def yourpurchases():
     """Show your past purchases"""
 
     # Queries for all the transactions and passes it onto the html file, where it is displayed
-    yourpurchases = db.execute("SELECT * FROM items WHERE userid = ?", session["user_id"])
-    return render_template("history.html", yourpurchases=yourpurchases)
+    yourpurchases = db.execute("SELECT * FROM past WHERE person_id = ?", session["user_id"])
+    decoded = []
+    for row in yourpurchases:
+        decoded.append(row["file"].decode())
+    for count, value in enumerate(decoded):
+        yourpurchases[count]["file"] = value
+    return render_template("yourpurchases.html", yourpurchases=yourpurchases)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -188,9 +211,9 @@ def sell():
         render_pic = base64.b64encode(data)
         name = request.form.get("name")
         desc = request.form.get("desc")
+        price = request.form.get("price")
         category = request.form.get("category")
-        print(name)
-        db.execute("INSERT INTO items (person_id, file, name, description, category) VALUES (?, ?, ?, ?, ?)", session["user_id"], render_pic, name, desc, category)
+        db.execute("INSERT INTO items (person_id, file, name, description, price, category) VALUES (?, ?, ?, ?, ?, ?)", session["user_id"], render_pic, name, desc, price, category)
         return redirect("/")
     else:
         return render_template("sell.html")
