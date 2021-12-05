@@ -50,14 +50,12 @@ def after_request(response):
 @login_required
 def index():
     """Show all items for sale in tables """
-    table = db.execute("SELECT * FROM items WHERE file != '' AND id = ?", session["user_id"])
-
+    table = db.execute("SELECT * FROM items WHERE file != ''")
     decoded = []
     for row in table:
         decoded.append(row["file"].decode())
     for count, value in enumerate(decoded):
         table[count]["file"] = value
-
     return render_template("index.html", table=table)
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -191,7 +189,7 @@ def sell():
         name = request.form.get("name")
         desc = request.form.get("desc")
         category = request.form.get("category")
-       
+        print(name)
         db.execute("INSERT INTO items (person_id, file, name, description, category) VALUES (?, ?, ?, ?, ?)", session["user_id"], render_pic, name, desc, category)
         return redirect("/")
     else:
