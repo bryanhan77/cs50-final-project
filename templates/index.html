@@ -29,8 +29,10 @@
         <div class="w3-half">
           <img src="{{ 'data:image/png;base64,{}'.format(dict.file) }}" style="width:100%" onclick="onClick(this)" alt="Concrete meets bricks">
           <form action="/buy">
-            <input type="hidden" id="item_id" name="item_id" value="{{ dict.id }}" />
-            <input class="form-control mx-auto w-auto" type="submit" value="Buy" />
+            <input class="form-control mx-auto w-auto" type="hidden" id="item_id" name="item_id" value="{{ dict.id }}">
+            <div class="d-flex justify-content-center">
+              <button class="btn btn-primary" type="submit">Buy</button>
+            </div>
           </form>      
         </div>
       </div>
@@ -58,7 +60,10 @@
             <div class="w3-half">
               <img src="{{ 'data:image/png;base64,{}'.format(dict.file) }}" style="width:100%" onclick="onClick(this)" alt="Concrete meets bricks">
               <form action="/buy">
-                <input class="form-control mx-auto w-auto" type="submit" value="Buy" />
+                <input class="form-control mx-auto w-auto" type="hidden" id="item_id" name="item_id" value="{{ dict.id }}">
+                <div class="d-flex justify-content-center">
+                  <button class="btn btn-primary" type="submit">Buy</button>
+                </div>              
               </form>            
             </div>
         </div>
@@ -78,10 +83,7 @@
               <div class="w3-half">
                 <img src="{{ 'data:image/png;base64,{}'.format(dict.file) }}" style="width:100%" onclick="onClick(this)" alt="Concrete meets bricks">
                 <form action="/buy" method="get">
-                  <!-- <input type="text" id="item_id" name="item_id"> -->
-                  <!-- <input class="form-control mx-auto w-auto" type="submit" value="Buy">   -->
                   <input class="form-control mx-auto w-auto" type="hidden" id="item_id" name="item_id" value="{{ dict.id }}">
-
                   <div class="d-flex justify-content-center">
                     <button class="btn btn-primary" type="submit">Buy</button>
                   </div>
@@ -105,7 +107,10 @@
               <div class="w3-half">
                 <img src="{{ 'data:image/png;base64,{}'.format(dict.file) }}" style="width:100%" onclick="onClick(this)" alt="Concrete meets bricks">
                 <form action="/buy">
-                  <input class="form-control mx-auto w-auto" type="submit" value="Buy" />
+                  <input class="form-control mx-auto w-auto" type="hidden" id="item_id" name="item_id" value="{{ dict.id }}">
+                  <div class="d-flex justify-content-center">
+                    <button class="btn btn-primary" type="submit">Buy</button>
+                  </div>                
                 </form>            
               </div>
           </div>
@@ -126,7 +131,10 @@
               <div class="w3-half">
                 <img src="{{ 'data:image/png;base64,{}'.format(dict.file) }}" style="width:100%" onclick="onClick(this)" alt="Concrete meets bricks">
                 <form action="/buy">
-                  <input class="form-control mx-auto w-auto" type="submit" value="Buy" />
+                  <input class="form-control mx-auto w-auto" type="hidden" id="item_id" name="item_id" value="{{ dict.id }}">
+                  <div class="d-flex justify-content-center">
+                    <button class="btn btn-primary" type="submit">Buy</button>
+                  </div>                
                 </form>            
               </div>
           </div>

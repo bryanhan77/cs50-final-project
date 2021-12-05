@@ -50,7 +50,7 @@ def after_request(response):
 @login_required
 def index():
     """Show all items for sale in tables """
-    table = db.execute("SELECT * FROM items WHERE file != ''")
+    table = db.execute("SELECT * FROM items WHERE file != '' AND id = ?", session["user_id"])
 
     decoded = []
     for row in table:
