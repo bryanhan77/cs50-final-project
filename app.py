@@ -68,14 +68,18 @@ def buy():
     if request.method == "POST":
 
         creditcard = request.form.get("card")
-        rows = db.execute("SELECT * FROM users WHERE user = ?", session["user_id"])
+        rows = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
         if not check_password_hash(rows[0]["hash"], request.form.get("password")):
             return apology("incorrect password", 403)
+
+        # Update database - delete item
+        item_id = request.form.get("item_id")
+        db.execute("DELETE FROM items WHERE id = ?", item_id)
         return redirect("/")        
     else:
-        print(request.form.get("item_id"))
-        print("foo")
-        return render_template("buy.html")
+        item_id = request.args.get("item_id")
+        currentItem = db.execute("SELECT * FROM items WHERE id = ?", item_id)
+        return render_template("buy.html", item_id=item_id, currentItem=currentItem[0])
 
 
 @app.route("/history")
