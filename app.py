@@ -82,15 +82,23 @@ def buy():
         return render_template("buy.html", item_id=item_id, currentItem=currentItem[0])
 
 
-@app.route("/history")
+@app.route("/yourlistings")
 @login_required
-def history():
-    """Show history of transactions"""
+def yourlistings():
+    """Show your current listings"""
 
     # Queries for all the transactions and passes it onto the html file, where it is displayed
-    history = db.execute("SELECT symbol, shares, price, datetime FROM stocks WHERE userid = ?", session["user_id"], )
-    return render_template("history.html", history=history)
+    yourlistings = db.execute("SELECT * FROM items WHERE userid = ?", session["user_id"])
+    return render_template("yourlistings.html", yourlistings=yourlistings)
 
+@app.route("/yourpurchases")
+@login_required
+def yourpurchases():
+    """Show your past purchases"""
+
+    # Queries for all the transactions and passes it onto the html file, where it is displayed
+    yourpurchases = db.execute("SELECT * FROM items WHERE userid = ?", session["user_id"])
+    return render_template("history.html", yourpurchases=yourpurchases)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
