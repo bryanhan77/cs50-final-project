@@ -51,14 +51,14 @@ def after_request(response):
 def index():
     """Show all items for sale in tables """
     table = db.execute("SELECT * FROM items WHERE file != ''")
-    
-    #file = db.execute("SELECT * FROM items")[0]["file"] #get first image file
 
-    #filename = secure_filename(file.filename)
-    #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    decoded = []
+    for row in table:
+        decoded.append(row["file"].decode())
+    for count, value in enumerate(decoded):
+        table[count]["file"] = value
 
-    return render_template("index.html", img=table[0]['file'].decode())
-
+    return render_template("index.html", table=table)
 
 @app.route("/buy", methods=["GET", "POST"])
 @login_required
@@ -73,6 +73,8 @@ def buy():
             return apology("incorrect password", 403)
         return redirect("/")        
     else:
+        print(request.form.get("item_id"))
+        print("foo")
         return render_template("buy.html")
 
 
@@ -171,7 +173,6 @@ def sell():
             return apology("must fill all fields", 400)
 
         # Updates items table with new item
-        
         imagefile = request.files.get("img")
         data = imagefile.read()
         render_pic = base64.b64encode(data)
