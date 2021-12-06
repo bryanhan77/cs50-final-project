@@ -1,1 +1,21 @@
 # CS50-Final-Project
+This documentation is to be a user’s manual for your project. Though the structure of your documentation is entirely up to you, it should be incredibly clear to the staff how and where, if applicable, to compile, configure, and use your project. Your documentation should be at least several paragraphs in length. It should not be necessary for us to contact you with questions regarding your project after its submission. Hold our hand with this documentation; be sure to answer in your documentation any questions that you think we might have while testing your work.
+
+Welcome to our CS50 final project: H-Mart. H-Mart is a web app that allows studets to upload items they want to sell, buy items other students have listed, and keep track of past purchases and items that you personally have uploaded. We have written the backend in python/flask and implemented the web interface in html. The project builds off of many concepts we have learned throughout the year from databases to dictionaries, while exploring new concepts such as file uploads. 
+
+The project has three main parts: app.py, written in flask/python, which is the backend implementation; the templates folder, which contains all of our html files; and hmart.db, which contains our databases written in sql. We'll talk about these items in depth. You will also notice other relevant files/folders such as helpers.py, requirements.txt, and a static folder - we'll touch on these briefly but they are not integral to the code. Lastly, there are other files/folders such as _pychache_, flask_session, venv, and various sql files that allow the code to run, but are largely irrelevant to understanding the project. 
+
+Understanding app.py. 
+Open up app.py. Atop the file are a bunch of imports, among them CS50’s SQL module and a few helper functions. More on those soon.
+
+After configuring Flask, notice how this file disables caching of responses (provided you’re in debugging mode, which you are by default in your code50 codespace), lest you make a change to some file but your browser not notice. Notice next how it configures Jinja with a custom “filter,” usd, a function (defined in helpers.py) that will make it easier to format values as US dollars (USD). It then further configures Flask to store sessions on the local filesystem (i.e., disk) as opposed to storing them inside of (digitally signed) cookies, which is Flask’s default. The file then configures CS50’s SQL module to use hmart.db.
+
+Thereafter are a whole bunch of routes: index, buy, yourlistings, yourpurchases, login, logout, register, and sell. Let's quickly walk through these functions starting with login and logout which you should be familiar with from Pset 9 (the finance pset). 
+When login is called, it uses db.execute to query hmart.db to see if the login username exists. Notice, too, how it uses check_password_hash to compare hashes of users’ passwords. Finally, notice how login “remembers” that a user is logged in by storing his or her user_id, an INTEGER, in session. That way, any of this file’s routes can check which user, if any, is logged in. Meanwhile, notice how logout simply clears session, effectively logging a user out.
+Index effectively displays all of the current items in the items database - which is constantly being updated as people buy and sell. We query the entire items table in hmart.db and send this array of dicitionaries (where each dictionary represents an item) to index.html when we render index.html. Notice, though that we must first decode all of the image files from base64 format and update the table with the decoded files. This is so to allow the image to be read in the <img> html tag. 
+
+The buy function allows users to purchase an item by inputting their password and creditcard number. If the passwrord is incorrect
+
+Notice how most routes are “decorated” with @login_required (a function defined in helpers.py too). That decorator ensures that, if a user tries to visit any of those routes, he or she will first be redirected to login so as to log in.
+
+Notice too how most routes support GET and POST. Even so, most of them (for now!) simply return an “apology,” since they’re not yet implemented.

@@ -12,7 +12,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 
-from helpers import apology, login_required, usd
+from helpers import apology, login_required, usd, cc_validate
 
 UPLOAD_FOLDER = '/path/to/the/uploads'
 
@@ -36,6 +36,13 @@ Session(app)
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///hmart.db")
 
+def decode(table):
+    decoded = []
+    for row in table:
+        decoded.append(row["file"].decode())
+    for count, value in enumerate(decoded):
+        table[count]["file"] = value
+    return table
 
 @app.after_request
 def after_request(response):
@@ -45,18 +52,11 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
-
 @app.route("/")
 @login_required
 def index():
     """Show all items for sale in tables"""
-    table = db.execute("SELECT * FROM items WHERE file != ''")
-    decoded = []
-    for row in table:
-        decoded.append(row["file"].decode())
-    for count, value in enumerate(decoded):
-        table[count]["file"] = value
-
+    table = decode(db.execute("SELECT * FROM items WHERE file != ''"))
     username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]
     return render_template("index.html", table=table, username=username)
 
@@ -67,12 +67,18 @@ def buy():
 
     if request.method == "POST":
 
-        creditcard = request.form.get("card")
+        creditcard = str(request.form.get("card"))
         rows = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
+
+        # Check password is correct
         if not check_password_hash(rows[0]["hash"], request.form.get("password")):
             return apology("incorrect password", 403)
 
-        # Update database - delete item
+        # Check if credit card is valid i.e. 4003600000000014 with Luhn's algorithm
+        if not cc_validate(creditcard):
+            return apology("invalid creditcard", 403)
+
+        # Update "past" and "items" databases - by inserting into "past" and deleting item from "items" 
         item_id = request.form.get("item_id")
         
         table = db.execute("SELECT * FROM items WHERE id = ?", item_id)[0]
@@ -97,14 +103,9 @@ def buy():
 @login_required
 def yourlistings():
     """Show your current listings"""
-
-    # Queries for all the transactions and passes it onto the html file, where it is displayed
-    yourlistings = db.execute("SELECT * FROM items WHERE person_id = ?", session["user_id"])
-    decoded = []
-    for row in yourlistings:
-        decoded.append(row["file"].decode())
-    for count, value in enumerate(decoded):
-        yourlistings[count]["file"] = value
+    
+    # Queries for all the past items listed for selling and passes it to the html file
+    yourlistings = decode(db.execute("SELECT * FROM items WHERE person_id = ?", session["user_id"]))
     return render_template("yourlistings.html", yourlistings=yourlistings)
 
 @app.route("/yourpurchases")
@@ -112,13 +113,8 @@ def yourlistings():
 def yourpurchases():
     """Show your past purchases"""
 
-    # Queries for all the transactions and passes it onto the html file, where it is displayed
-    yourpurchases = db.execute("SELECT * FROM past WHERE person_id = ?", session["user_id"])
-    decoded = []
-    for row in yourpurchases:
-        decoded.append(row["file"].decode())
-    for count, value in enumerate(decoded):
-        yourpurchases[count]["file"] = value
+    # Queries for all the transactions and passes it to the html file, where it is displayed
+    yourpurchases = decode(db.execute("SELECT * FROM past WHERE person_id = ?", session["user_id"]))
     return render_template("yourpurchases.html", yourpurchases=yourpurchases)
 
 @app.route("/login", methods=["GET", "POST"])
