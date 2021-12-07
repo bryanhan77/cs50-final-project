@@ -41,20 +41,12 @@ The sell function allows you to upload image of an item you want to sell, and re
 helpers.py
 We retain the apology, login_required, and usd functions from Finance and add our own cc_validate and decode. cc_validate of course comes from Pset 1 (credit). The decode function takes in an array of dictionaries, and updates each of the files in the dictionary with a decoded version of that file. See https://stackoverflow.com/questions/3470546/how-do-you-decode-base64-data-in-python for more information on decoding base64.
 
+requirements.txt
+This file simply prescribes the packages on which this app will depend.
+
+static/
+Inside static lives styles.css which helps with formatting/layout design in html. You will also the harvard logo (favicon.ico) which is displayed in the tab when the app is run. See header of test.html for implementation.  
+
 ---
 
 We talk about the design of html in DESIGN.md. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-

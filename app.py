@@ -189,8 +189,7 @@ def sell():
 
         # Updates items table with new item
         imagefile = request.files.get("img")
-        data = imagefile.read()
-        render_pic = base64.b64encode(data)
+        render_pic = base64.b64encode(imagefile.read())
         name = request.form.get("name")
         desc = request.form.get("desc")
         price = request.form.get("price")
