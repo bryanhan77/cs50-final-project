@@ -1,4 +1,7 @@
 # CS50-Final-Project
+
+Presentation link: https://youtu.be/xuT1Ok-Dhyc
+
 This documentation is to be a user’s manual for your project. Though the structure of your documentation is entirely up to you, it should be incredibly clear to the staff how and where, if applicable, to compile, configure, and use your project. Your documentation should be at least several paragraphs in length. It should not be necessary for us to contact you with questions regarding your project after its submission. Hold our hand with this documentation; be sure to answer in your documentation any questions that you think we might have while testing your work.
 
 Welcome to our CS50 final project: H-Mart. H-Mart is a web app that allows studets to upload items they want to sell, buy items other students have listed, and keep track of past purchases and items that you personally have uploaded. We have written the backend in python/flask and implemented the web interface in html. The project builds off of many concepts we have learned throughout the year from databases to dictionaries, but also explores new concepts such as file upload and data storage. 
