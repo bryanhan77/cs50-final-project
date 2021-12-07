@@ -1,4 +1,9 @@
-# CS50-Final-Project
+# CS50-Final-Project 
+December 7, 2021
+Harvard College
+Bryan Han and Paul Chin
+TFs: Coby Sheehan and Varshini Subhash
+----------------------------------------
 
 Presentation link: https://youtu.be/xuT1Ok-Dhyc
 

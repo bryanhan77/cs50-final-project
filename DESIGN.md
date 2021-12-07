@@ -1,3 +1,10 @@
+# CS50-Final-Project 
+December 7, 2021
+Harvard College
+Bryan Han and Paul Chin
+TFs: Coby Sheehan and Varshini Subhash
+--------------------------------------
+
 app.py
 Lines 2-3. Import base64 module to work with the image datatypes. 
 Line 45. We use this decode function several times throughout to decode the BLOB files stored in the SQL database. We noticed we were copying a pasting a lot so we instead implemented this function and cut down around 20 lines of code. 
@@ -37,5 +44,3 @@ buy.html
 
 sell.html
 - In line 25, we have an input button take an a "file" type where the image can be a png or jpg (image/*).
-
-
