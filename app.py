@@ -1,5 +1,3 @@
-# Adding comment
-#CREATE TABLE items (person_id INTEGER, file BLOB, name TEXT NOT NULL, description Text NOT NULL, FOREIGN KEY(person_id) REFERENCES users(id));
 import os
 import base64
 from io import BytesIO #Converts data from Database into bytes
@@ -12,18 +10,13 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 
-from helpers import apology, login_required, usd, cc_validate
-
-UPLOAD_FOLDER = '/path/to/the/uploads'
-
+from helpers import apology, login_required, usd, cc_validate, decode
 
 # Configure application
 app = Flask(__name__)
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
 
 # Custom filter
 app.jinja_env.filters["usd"] = usd
@@ -36,13 +29,6 @@ Session(app)
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///hmart.db")
 
-def decode(table):
-    decoded = []
-    for row in table:
-        decoded.append(row["file"].decode())
-    for count, value in enumerate(decoded):
-        table[count]["file"] = value
-    return table
 
 @app.after_request
 def after_request(response):
@@ -74,7 +60,7 @@ def buy():
         if not check_password_hash(rows[0]["hash"], request.form.get("password")):
             return apology("incorrect password", 403)
 
-        # Check if credit card is valid i.e. 4003600000000014 with Luhn's algorithm
+        # Check if credit card is valid with Luhn's algorithm
         if not cc_validate(creditcard):
             return apology("invalid creditcard", 403)
 
@@ -103,7 +89,7 @@ def buy():
 @login_required
 def yourlistings():
     """Show your current listings"""
-    
+
     # Queries for all the past items listed for selling and passes it to the html file
     yourlistings = decode(db.execute("SELECT * FROM items WHERE person_id = ?", session["user_id"]))
     return render_template("yourlistings.html", yourlistings=yourlistings)

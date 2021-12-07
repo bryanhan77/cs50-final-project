@@ -39,6 +39,7 @@ def usd(value):
     """Format value as USD."""
     return f"${value:,.2f}"
 
+# Validate card with Luhn's algorithm
 def cc_validate(card):
     # Ask for number and convert to string
     card = str(card)
@@ -66,4 +67,15 @@ def cc_validate(card):
     else:
         index = 3
     return (index!=3)
+
+    
+# Decode SQL table image files so that it is renderable in the html files.
+# decode() takes in an array of dits where each dict represents an item. 
+def decode(table):
+    decoded = [] # holds decoded png files 
+    for row in table:
+        decoded.append(row["file"].decode())
+    for count, value in enumerate(decoded):
+        table[count]["file"] = value
+    return table
 
