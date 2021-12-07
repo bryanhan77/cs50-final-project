@@ -1,0 +1,35 @@
+{% extends "test.html" %}
+
+{% block title %}
+    Your Listings
+{% endblock %}
+
+{% block main %}
+  <!-- Header -->
+  <h1 class="w3-main" style="margin-top:50px;text-align:center"><b>Your Listings</b></h1>
+  
+  <!-- {% for dict in table %}
+      <img src="{{ 'data:image/png;base64,{}'.format(dict.file) }}"/>
+  {% endfor %} -->
+
+  <div class="w3-container" style="margin-top:80px" id="yourlistings">
+    <div class="w3-row-padding">
+      <hr style="width:50px;border:5px solid red" class="w3-round">
+    {% for dict in yourlistings %}
+      <div class="w3-row-padding">
+        <div class="w3-half">
+          <img src="{{ 'data:image/png;base64,{}'.format(dict.file) }}" style="width:100%" onclick="onClick(this)" alt="{{ dict.name }}">     
+        </div>
+
+        <div class="w3-half">
+          <h1 style="text-align:center"><b>{{ dict.name }}</b></h1><br>
+          <h2 style="text-align:center"><i>"{{ dict.description }}"</i></h2><br>
+          <h3 style="text-align:center">Price: {{ dict.price | usd }}</h3><br>
+        </div>
+      </div>
+      <hr style="width:50px;border:5px solid red" class="w3-round">
+    {% endfor %}
+    </div>
+  </div>
+
+{% endblock %}
