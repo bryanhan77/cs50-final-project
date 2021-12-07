@@ -2,9 +2,12 @@
 
 Presentation link: https://youtu.be/xuT1Ok-Dhyc
 
-This documentation is to be a user’s manual for your project. Though the structure of your documentation is entirely up to you, it should be incredibly clear to the staff how and where, if applicable, to compile, configure, and use your project. Your documentation should be at least several paragraphs in length. It should not be necessary for us to contact you with questions regarding your project after its submission. Hold our hand with this documentation; be sure to answer in your documentation any questions that you think we might have while testing your work.
+Welcome to our CS50 final project: H-Mart. H-Mart is a web app that allows students to upload items they want to sell, buy items other students have listed, and keep track of past purchases and items that you personally have uploaded. We have written the backend in python/flask and implemented the web interface in html. The project builds off of many concepts we have learned throughout the year from databases to dictionaries, but also explores new concepts such as file upload and data storage. 
 
-Welcome to our CS50 final project: H-Mart. H-Mart is a web app that allows studets to upload items they want to sell, buy items other students have listed, and keep track of past purchases and items that you personally have uploaded. We have written the backend in python/flask and implemented the web interface in html. The project builds off of many concepts we have learned throughout the year from databases to dictionaries, but also explores new concepts such as file upload and data storage. 
+To run the program, make sure you are in the CS50 codespaces where python, SQL, java script, http-server are available. If not, make sure you have these programs downloaded locally per https://www.youtube.com/watch?v=TZ6c7y8N64k&ab_channel=CS50 for mac or https://www.youtube.com/watch?v=9yzQCgIdL-Y&ab_channel=CS50 for windows. 
+
+To test the code, upload the CS50-FINAL-PROJECT folder and change directory to that folder. Then, run "flask run" in your command line and click on the available server, you should see something like: "INFO:  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)". The link should open up to the login page where you can register as a new user with your name and password. 
+Once doing so, it should bring you to our home page where you can see all the current items listed. Navigate the different available items with the side bar by clicking on the type category you're interested in. Click on the image to see a full screen version of the image. Once you're interested in an item, go ahead and click buy which will bring you to the buy page. Enter your credit card (an example is provided) and your password from before. Great! You've purchased an item! Check in past purchases to see your item, and notice that it is now gone from listings. Now, let's upload an item by clicking sell. That will bring you to a page where you can upload the name of your item, a description, a price, an image, and a category for your item. Once all of the fields have been filled, click "post listing". You should now see your item appear on the homepage under the correct category. Check to see your past uploads in the "Your listings" tab. Once finished, you can logout. 
 
 The project has three main parts: app.py, written in flask/python, which is the backend implementation; the templates folder, which contains all of our html files; and hmart.db, which contains our tables written in sql. In this file, we'll talk mainly about app.py, and in styles.md, the templates and databases. You will also notice other relevant files/folders such as helpers.py, requirements.txt, and a static folder - we'll touch on these briefly. Lastly, there are other files/folders such as _pychache_, flask_session, venv, and various sql files that allow the code to run, but are largely irrelevant to our implementation of the project. 
 
@@ -17,14 +20,14 @@ Thereafter are a whole bunch of routes: index, buy, yourlistings, yourpurchases,
 
 When login is called, it uses db.execute to query hmart.db to see if the login username exists. Notice, how it uses check_password_hash to compare hashes of users’ passwords. Finally, notice how login “remembers” that a user is logged in by storing his or her user_id, an INTEGER, in session. That way, any of this file’s routes can check which user, if any, is logged in. Meanwhile, notice how logout simply clears session, effectively logging a user out.
 
-Calling index effectively displays all of the current items in the items database - which is constantly being updated as people buy and sell. We select the entire items table in hmart.db and send this array of dicitionaries (where each dictionary represents an item) to index.html when we render index.html. Notice, though, that we must first decode all of the image files from base64 format and update the table with the decoded files. This all done by the decode() function written in helpers.py. This is to evnetually allow the image to be read in the <img> html tag. 
+Calling index effectively displays all of the current items in the items database - which is constantly being updated as people buy and sell. We select the entire items table in hmart.db and send this array of dictionaries (where each dictionary represents an item) to index.html when we render index.html. Notice, though, that we must first decode all of the image files from base64 format and update the table with the decoded files. This all done by the decode() function written in helpers.py. This is to eventually allow the image to be read in the <img> html tag. 
 
 When accessing the buy function via get, we render the buy.html page while displaying the pertinent information for the item to-be purchased. This is done by retrieving the id of the item (which is sent as a hidden input in the buy.html), querying for the dictionary associated with that id, and then sending that dictionary to buy.html where the information can be displayed.
-When submitting the buy function via post, the user purchases an item by inputting their password and creditcard number. If the passwrord is incorrect (check with the password compare hash) or if the credit card is invalid (check with Luhn's algorithm implemented in helpers.py), we throw an error. We then simply update the "items" and "past" tables - deleting the purchased item from items table, and recording the purchased item in "past". 
+When submitting the buy function via post, the user purchases an item by inputting their password and credit card number. If the password is incorrect (check with the password compare hash) or if the credit card is invalid (check with Luhn's algorithm implemented in helpers.py), we throw an error. We then simply update the "items" and "past" tables - deleting the purchased item from items table, and recording the purchased item in "past". 
 
-The yourlistings function queries for all your past listings and passes it to the yourlistings.html file, where it displays all the itmes you've set up for purchase.
+The yourlistings function queries for all your past listings and passes it to the yourlistings.html file, where it displays all the items you've set up for purchase.
 
-The pastpurchases fucntion queries for all your past purchases and passes it to the yourchases.html. 
+The pastpurchases function queries for all your past purchases and passes it to the yourchases.html. 
 
 The sell function allows you to upload image of an item you want to sell, and requires the user to give its price, a description, and category. The sell function proved to be tricky to implement as we had to figure out how to store the image files. 
 
@@ -35,7 +38,8 @@ We retain the apology, login_required, and usd functions from Finance and add ou
 
 ---
 
-We talk about most of the design of html in style.md. We mention here, though, that test.html is the base template from which all other html templates are derived. It should technically be called template.html, but when we were testing it out, we just called it test.html. test.html is adapted from an html template from W3schools, referenced in the test.html file. All html pages import bootstrap, W3schools, and styles.css for various formatting packages. 
+We talk about the design of html in DESIGN.md. 
+
 
 
 

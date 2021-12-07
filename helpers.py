@@ -51,22 +51,18 @@ def cc_validate(card):
         else:
             total = total + math.floor((2 * int(card[digits - 1 - i])) / 10) + (2 * int(card[digits - 1 - i])) % 10
 
-    # Card print variable
-    cards = ["AMEX\n", "VISA\n", "MASTERCARD\n", "INVALID\n"]
-    index = 0
     front = int(card[0]) * 10 + int(card[1])  # That is, front two numbers
     if total % 10 == 0:
-        if digits == 15 and (front == 34 or front == 37):
-            index = 0
-        elif (digits == 13 or digits == 16) and int(card[0]) == 4:
-            index = 1
-        elif (digits == 16 and (front > 50 or front < 56)):
-            index = 2
+        if digits == 15 and (front == 34 or front == 37): # AMEX
+            return True
+        elif (digits == 13 or digits == 16) and int(card[0]) == 4: # VISA
+            return True
+        elif (digits == 16 and (front > 50 or front < 56)): # Mastercard
+            return True
         else:
-            index = 3
+            return False
     else:
-        index = 3
-    return (index!=3)
+        return False
 
     
 # Decode SQL table image files so that it is renderable in the html files.
